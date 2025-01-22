@@ -1,4 +1,4 @@
-flowchart TB
+graph TD
     User[User/Client] --> API[FastAPI Endpoints]
     API --> MetaAgent[Meta Agent Orchestrator]
     
