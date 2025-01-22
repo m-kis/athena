@@ -1,4 +1,5 @@
-graph TD
+::: mermaid
+flowchart TB
     User[User/Client] --> API[FastAPI Endpoints]
     API --> MetaAgent[Meta Agent Orchestrator]
     
