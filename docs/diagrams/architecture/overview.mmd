@@ -1,30 +1,35 @@
-C4Context
-    title System Context diagram for Athena AI
-
-    Person(user, "User", "System Administrator/DevOps")
+graph TB
+    User[Client/User] --> API[FastAPI Endpoints]
+    API --> MetaAgent[Meta Agent Orchestrator]
     
-    System_Boundary(athena, "Athena AI") {
-        System(meta, "Meta Agent", "Orchestrates other agents")
-        System(core, "Core Services", "RAG, Cache, DB")
-        System(log, "Log Agent", "Log Analysis")
-        System(security, "Security Agent", "Security Monitoring")
-        System(metrics, "Metrics Agent", "Performance Analysis")
-    }
-
-    System_Ext(loki, "Loki", "Log Aggregation")
-    System_Ext(prometheus, "Prometheus", "Metrics Collection")
-    System_Ext(chromadb, "ChromaDB", "Vector Store")
-    System_Ext(postgres, "PostgreSQL", "Persistence")
-    System_Ext(redis, "Redis", "Caching")
-
-    Rel(user, athena, "Uses", "HTTP/REST")
-    Rel(meta, core, "Uses")
-    Rel(meta, log, "Coordinates")
-    Rel(meta, security, "Coordinates")
-    Rel(meta, metrics, "Coordinates")
+    subgraph Agents[Specialized Agents]
+        MetaAgent --> LogAgent[Log Analysis Agent]
+        MetaAgent --> SecurityAgent[Security Agent]
+        MetaAgent --> MetricsAgent[Metrics Agent]
+        MetaAgent --> CoreAgent[Core Services]
+    end
     
-    Rel(log, loki, "Reads", "HTTP")
-    Rel(metrics, prometheus, "Reads", "HTTP")
-    Rel(core, chromadb, "Stores vectors")
-    Rel(core, postgres, "Persists data")
-    Rel(core, redis, "Caches")
+    subgraph DataSources[Data Sources]
+        LogAgent --> Loki[Loki Logs]
+        MetricsAgent --> Prometheus[Prometheus Metrics]
+        SecurityAgent --> SecurityLogs[Security Events]
+    end
+    
+    subgraph Storage[Storage Layer]
+        CoreAgent --> ChromaDB[Vector Store - ChromaDB]
+        CoreAgent --> PostgreSQL[PostgreSQL]
+        CoreAgent --> Redis[Redis Cache]
+    end
+    
+    subgraph MLServices[ML Services]
+        LogAgent --> NLP[NLP Models]
+        SecurityAgent --> AnomalyDetection[Anomaly Detection]
+        MetricsAgent --> Forecasting[Time Series Forecasting]
+        CoreAgent --> RAG[RAG Pipeline]
+    end
+
+    subgraph Monitoring[Monitoring & Metrics]
+        API --> PrometheusMetrics[Prometheus Metrics]
+        MetricsAgent --> Grafana[Grafana Dashboards]
+        LogAgent --> Alerts[Alert System]
+    end
