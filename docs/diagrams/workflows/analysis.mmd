@@ -1,0 +1,34 @@
+sequenceDiagram
+    participant U as User
+    participant API as API Endpoint
+    participant M as Meta Agent
+    participant C as Core Services
+    participant L as Log Agent
+    participant S as Security Agent
+    participant Met as Metrics Agent
+    participant DB as Storage
+
+    U->>API: Submit Analysis Request
+    API->>M: Forward Request
+    
+    par Query Processing
+        M->>L: Request Log Analysis
+        M->>S: Request Security Check 
+        M->>Met: Request Metrics Analysis
+    end
+
+    L->>C: Fetch Context
+    S->>C: Fetch Context
+    Met->>C: Fetch Context
+
+    C->>DB: Query Data
+
+    L-->>M: Log Analysis Results
+    S-->>M: Security Analysis Results
+    Met-->>M: Metrics Analysis Results
+
+    M->>C: Combine Results
+    C->>DB: Store Analysis
+    
+    M-->>API: Return Combined Analysis
+    API-->>U: Return Response
