@@ -1,0 +1,30 @@
+C4Context
+    title System Context diagram for Athena AI
+
+    Person(user, "User", "System Administrator/DevOps")
+    
+    System_Boundary(athena, "Athena AI") {
+        System(meta, "Meta Agent", "Orchestrates other agents")
+        System(core, "Core Services", "RAG, Cache, DB")
+        System(log, "Log Agent", "Log Analysis")
+        System(security, "Security Agent", "Security Monitoring")
+        System(metrics, "Metrics Agent", "Performance Analysis")
+    }
+
+    System_Ext(loki, "Loki", "Log Aggregation")
+    System_Ext(prometheus, "Prometheus", "Metrics Collection")
+    System_Ext(chromadb, "ChromaDB", "Vector Store")
+    System_Ext(postgres, "PostgreSQL", "Persistence")
+    System_Ext(redis, "Redis", "Caching")
+
+    Rel(user, athena, "Uses", "HTTP/REST")
+    Rel(meta, core, "Uses")
+    Rel(meta, log, "Coordinates")
+    Rel(meta, security, "Coordinates")
+    Rel(meta, metrics, "Coordinates")
+    
+    Rel(log, loki, "Reads", "HTTP")
+    Rel(metrics, prometheus, "Reads", "HTTP")
+    Rel(core, chromadb, "Stores vectors")
+    Rel(core, postgres, "Persists data")
+    Rel(core, redis, "Caches")
