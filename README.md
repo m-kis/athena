@@ -1,24 +1,27 @@
-# Athena AI Platform
+# Athena AI - Intelligent Log Analysis System
 
-Plateforme modulaire d'agents IA pour l'analyse et la surveillance de systèmes.
+## Project Structure
 
-## Agents
+- `agents/core`: Core functionality and shared components
+- `agents/log`: Log analysis agent
+- `agents/meta`: Meta agent for orchestration
+- `agents/metrics`: Metrics and monitoring agent
+- `agents/security`: Security analysis agent
 
-- **Core**: Gestion centralisée, API et configurations
-- **Log**: Analyse de logs avec RAG et détection de patterns
-- **Metrics**: Analyse de métriques et prédictions avec Prophet
-- **Security**: Détection d'anomalies et analyse de sécurité
-- **Meta**: Orchestration et coordination inter-agents
+## Installation
 
-## Architecture
-- Basé sur FastAPI et Langchain
-- RAG avec ChromaDB
-- LLM via Ollama/Mistral
-- Stockage PostgreSQL
-- Cache Redis
-
-## Démarrage rapide
 ```bash
-git clone https://github.com/user/athena-monorepo
-cd athena-monorepo/agents/core
-docker-compose up
+pip install -r requirements.txt
+```
+
+## Usage
+
+[Documentation à venir]
+
+## Contributing
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
